@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class LoginController {
   @RequestMapping("/login")
-  public String loginMessage(@RequestParam String name, ModelMap model) {
-    model.put("name", name);
+  public String loginMessage() {
     return "login";
+  }
+  @RequestMapping("/intro")
+  public String introductionMessage(@RequestParam String name, ModelMap model) {
+    model.put("name", name);
+    return "intro";
   }
 }
