@@ -1,5 +1,7 @@
 package com.springbot.phapdinh.github.web.springbootwebapplication.controller;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -23,10 +25,14 @@ public class TodoController {
     return "list-todos";
   }
 
-  @RequestMapping(value="/add-todo", method=RequestMethod.POST)
-  public String showTodos(ModelMap model) {
-    String name = (String) model.get("name");
-		model.put("todos", todos.retrieveTodos(name));
+  @RequestMapping(value="/add-todo", method=RequestMethod.GET)
+  public String showAddTodosPage(ModelMap model) {
     return "add-todo";
+  }
+
+  @RequestMapping(value="/add-todo", method=RequestMethod.POST)
+  public String showAddTodosPage(ModelMap model, @RequestParam String desc) {
+    todos.addTodo((String) model.get("name"), desc, new Date(), false);
+    return "redirect:/list-todos";
   }
 }
