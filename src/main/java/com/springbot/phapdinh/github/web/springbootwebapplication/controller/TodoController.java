@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import com.springbot.phapdinh.github.web.springbootwebapplication.service.TodoService;
+import com.springbot.phapdinh.github.web.springbootwebapplication.model.Todo;
 
 @Controller
 @SessionAttributes("name")
@@ -27,6 +29,7 @@ public class TodoController {
 
   @RequestMapping(value="/add-todo", method=RequestMethod.GET)
   public String showAddTodosPage(ModelMap model) {
+    model.addAttribute("todo", new Todo(0, (String) model.get("name"), "Default Desc", new Date(), false));
     return "todo";
   }
 
@@ -37,8 +40,8 @@ public class TodoController {
   }
 
   @RequestMapping(value="/add-todo", method=RequestMethod.POST)
-  public String showAddTodosPage(ModelMap model, @RequestParam String desc) {
-    todos.addTodo((String) model.get("name"), desc, new Date(), false);
+  public String showAddTodosPage(ModelMap model, Todo todo) {
+    todos.addTodo((String) model.get("name"), todo.getDesc(), new Date(), false);
     return "redirect:/list-todos";
   }
 }

@@ -1,3 +1,4 @@
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 
 <head>
@@ -9,15 +10,16 @@
 
 <body>
 	<div class="container">
-		<form method="post">
+		<form:form method="post" modelAttribute="todo">
 			<fieldset class="form-group">
-				<label>Description</label>
-				<input name="desc" type="text"
+				<form:label path="desc">Description</form:label>
+				<form:input path="desc" type="text"
 					class="form-control" required="required"/>
+				<form:errors path="desc" cssClass="text-warning"/>
 			</fieldset>
 
 			<button type="submit" class="btn btn-success">Add</button>
-		</form>
+		</form:form>
 	</div>
 
 	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
