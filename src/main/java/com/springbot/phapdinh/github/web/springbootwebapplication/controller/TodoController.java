@@ -2,6 +2,7 @@ package com.springbot.phapdinh.github.web.springbootwebapplication.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -79,5 +81,10 @@ public class TodoController {
   public String deleteTodo(@RequestParam int id) {
     todos.deleteTodo(id);
     return "redirect:list-todos";
+  }
+
+  @RequestMapping(value="/get-todos", method=RequestMethod.GET)
+  public @ResponseBody List<Todo> getTodos() {
+    return todos.retrieveTodos("in28Minutes");
   }
 }
