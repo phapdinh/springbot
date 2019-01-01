@@ -2,7 +2,11 @@ package com.springbot.phapdinh.github.web.springbootwebapplication;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
+
+import com.springbot.phapdinh.github.web.springbootwebapplication.model.Todo;
 import com.springbot.phapdinh.github.web.springbootwebapplication.service.LoginService;
+import com.springbot.phapdinh.github.web.springbootwebapplication.service.TodoService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,4 +25,11 @@ public class SpringBootWebApplicationTests {
 		assertEquals(false, login.validateUser("in28inutes", "password"));
 	}
 
+	@Test
+	public void TodoService() {
+		TodoService todoService = new TodoService();
+		Todo todo = new Todo(1, "in28Minutes", "Learn Spring MVC", new Date(), false);
+		Todo retrievedTodo = todoService.retrieveTodo(1);
+		assertEquals(todo, retrievedTodo);
+	}
 }
