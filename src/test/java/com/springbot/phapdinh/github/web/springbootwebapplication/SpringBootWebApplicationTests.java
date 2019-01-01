@@ -17,6 +17,7 @@ public class SpringBootWebApplicationTests {
 	public void LoginService() {
 		LoginService login = new LoginService();
 		assertEquals(true, login.validateUser("in28minutes", "password"));
+		assertEquals(true, login.validateUser("IN28MINUTES", "PASSWORD"));
 		assertEquals(false, login.validateUser("in28inutes", "password"));
 	}
 
