@@ -10,26 +10,30 @@ import com.springbot.phapdinh.github.web.springbootwebapplication.service.TodoSe
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringBootWebApplicationTests {
+	@Autowired
+	private TodoService todos;
+
+	@Autowired
+	private LoginService service;
 
 	@Test
 	public void LoginService() {
-		LoginService login = new LoginService();
-		assertEquals(true, login.validateUser("in28minutes", "password"));
-		assertEquals(true, login.validateUser("IN28MINUTES", "PASSWORD"));
-		assertEquals(false, login.validateUser("in28inutes", "password"));
+		assertEquals(true, service.validateUser("in28minutes", "password"));
+		assertEquals(true, service.validateUser("IN28MINUTES", "PASSWORD"));
+		assertEquals(false, service.validateUser("in28inutes", "password"));
 	}
 
 	@Test
 	public void TodoService() {
-		TodoService todoService = new TodoService();
 		Todo todo = new Todo(1, "in28Minutes", "Learn Spring MVC", new Date(), false);
-		Todo retrievedTodo = todoService.retrieveTodo(1);
+		Todo retrievedTodo = todos.retrieveTodo(1);
 		assertEquals(todo, retrievedTodo);
 	}
 }
