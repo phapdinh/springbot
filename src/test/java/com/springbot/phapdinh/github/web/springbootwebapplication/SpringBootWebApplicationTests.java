@@ -32,8 +32,10 @@ public class SpringBootWebApplicationTests {
 
 	@Test
 	public void TodoService() {
+		Todo retrievedTodo0 = todos.retrieveTodo(0);
 		Todo todo = new Todo(1, "in28Minutes", "Learn Spring MVC", new Date(), false);
-		Todo retrievedTodo = todos.retrieveTodo(1);
-		assertEquals(todo, retrievedTodo);
+		Todo retrievedTodo1 = todos.retrieveTodo(1);
+		assertEquals(todo, retrievedTodo1);
+		assertEquals(null, retrievedTodo0);
 	}
 }
