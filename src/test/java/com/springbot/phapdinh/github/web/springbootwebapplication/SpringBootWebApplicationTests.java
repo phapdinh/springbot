@@ -2,40 +2,39 @@ package com.springbot.phapdinh.github.web.springbootwebapplication;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
-
-import com.springbot.phapdinh.github.web.springbootwebapplication.model.Todo;
-import com.springbot.phapdinh.github.web.springbootwebapplication.service.LoginService;
-import com.springbot.phapdinh.github.web.springbootwebapplication.service.TodoService;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+import com.springbot.phapdinh.github.web.springbootwebapplication.service.LoginService;
+
+@RunWith(Parameterized.class)
 public class SpringBootWebApplicationTests {
-	@Autowired
-	private TodoService todos;
+	private LoginService service = new LoginService();
+	private String expect;
+	private String username;
+	private String password;
 
-	@Autowired
-	private LoginService service;
+	public SpringBootWebApplicationTests(String expect, String username, String password) {
+		this.expect = expect;
+		this.username = username;
+		this.password = password;
+	}
 
-	@Test
-	public void LoginService() {
-		assertEquals(true, service.validateUser("in28minutes", "password"));
-		assertEquals(true, service.validateUser("IN28MINUTES", "PASSWORD"));
-		assertEquals(false, service.validateUser("in28inutes", "password"));
+	@Parameters
+	public static Collection<String[]> enterCredentials() {
+		String[][] credentials = { { "true", "in28minutes", "password" }, { "true", "IN28MINUTES", "PASSWORD" }, { "false", "in28inutes", "password" } };
+		return Arrays.asList(credentials);
 	}
 
 	@Test
-	public void TodoService() {
-		Todo retrievedTodo0 = todos.retrieveTodo(0);
-		Todo todo = new Todo(1, "in28Minutes", "Learn Spring MVC", new Date(), false);
-		Todo retrievedTodo1 = todos.retrieveTodo(1);
-		assertEquals(todo, retrievedTodo1);
-		assertEquals(null, retrievedTodo0);
+	public void LoginService() {
+		System.out.println("Credentials with : " + username + " and " + password + " was " + Boolean.parseBoolean(expect));
+
+		assertEquals(Boolean.parseBoolean(expect), service.validateUser(username, password));
 	}
 }
