@@ -34,56 +34,56 @@ public class TodoController {
     binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
   }
 
-  @RequestMapping(value="/list-todos", method=RequestMethod.GET)
+  @RequestMapping(value = "/list-todos", method = RequestMethod.GET)
   public String showTodos(ModelMap model) {
     String name = (String) model.get("name");
-		model.put("todos", todos.retrieveTodos(name));
+    model.put("todos", todos.retrieveTodos(name));
     return "list-todos";
   }
 
-  @RequestMapping(value="/add-todo", method=RequestMethod.GET)
+  @RequestMapping(value = "/add-todo", method = RequestMethod.GET)
   public String showAddTodosPage(ModelMap model) {
     model.addAttribute("todo", new Todo(0, (String) model.get("name"), "Default Desc", new Date(), false));
     return "todo";
   }
 
-  @RequestMapping(value="/add-todo", method=RequestMethod.POST)
+  @RequestMapping(value = "/add-todo", method = RequestMethod.POST)
   public String showAddTodosPage(ModelMap model, @Valid Todo todo, BindingResult result) {
-    if(result.hasErrors()) {
-			return "todo";
-		}
+    if (result.hasErrors()) {
+      return "todo";
+    }
     todos.addTodo((String) model.get("name"), todo.getDesc(), todo.getTargetDate(), false);
     return "redirect:/list-todos";
   }
 
   @RequestMapping(value = "/update-todo", method = RequestMethod.GET)
-	public String showUpdateTodoPage(@RequestParam int id, ModelMap model) {
-		Todo todo = todos.retrieveTodo(id);
-		model.put("todo", todo);
-		return "todo";
-	}
+  public String showUpdateTodoPage(@RequestParam int id, ModelMap model) {
+    Todo todo = todos.retrieveTodo(id);
+    model.put("todo", todo);
+    return "todo";
+  }
 
-	@RequestMapping(value = "/update-todo", method = RequestMethod.POST)
-	public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
+  @RequestMapping(value = "/update-todo", method = RequestMethod.POST)
+  public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
 
-		if (result.hasErrors()) {
-			return "todo";
-		}
+    if (result.hasErrors()) {
+      return "todo";
+    }
 
-		todo.setUser((String) model.get("name"));
+    todo.setUser((String) model.get("name"));
 
-		todos.updateTodo(todo);
+    todos.updateTodo(todo);
 
-		return "redirect:/list-todos";
-	}
+    return "redirect:/list-todos";
+  }
 
-  @RequestMapping(value="/delete-todo", method=RequestMethod.GET)
+  @RequestMapping(value = "/delete-todo", method = RequestMethod.GET)
   public String deleteTodo(@RequestParam int id) {
     todos.deleteTodo(id);
     return "redirect:list-todos";
   }
 
-  @RequestMapping(value="/get-todos", method=RequestMethod.GET)
+  @RequestMapping(value = "/get-todos", method = RequestMethod.GET)
   public @ResponseBody List<Todo> getTodos() {
     return todos.retrieveTodos("in28Minutes");
   }
