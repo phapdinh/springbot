@@ -37,6 +37,10 @@ public class TodoController {
   @RequestMapping(value = "/list-todos", method = RequestMethod.GET)
   public String showTodos(ModelMap model) {
     String name = (String) model.get("name");
+    if(name == null || name.length() == 0) {
+      return "errors";
+    }
+
     model.put("todos", todos.retrieveTodos(name));
     return "list-todos";
   }
