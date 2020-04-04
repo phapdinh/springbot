@@ -16,8 +16,12 @@ public class LoginController {
   private LoginService service;
 
   @GetMapping(value={"/login", "/"})
-  public String showLogin() {
-    return "login";
+  public String showLogin(ModelMap model) {
+    String name = (String) model.get("name");
+    if(name == null || name.length() == 0) {
+      return "login";
+    }
+    return "welcome";
   }
 
   @PostMapping(value="/login")
