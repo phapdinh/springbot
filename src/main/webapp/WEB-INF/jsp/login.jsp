@@ -3,7 +3,7 @@
 
 <div class="container">
 
-	<font color="red">${errorMessage}</font>
+	<span>${errorMessage}</span>
 	<form method="post">
 		Name : <input type="text" name="name" />
 		Password : <input type="password" name="password" /> 
